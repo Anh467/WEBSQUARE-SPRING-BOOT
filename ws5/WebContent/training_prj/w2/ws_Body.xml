@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_vertical_guides="" meta_horizontal_guides="264">
+    	<w2:type>DEFAULT</w2:type>
+    	<w2:buildDate />
+    	<xf:model>
+    		<xf:instance>
+    			<data xmlns="" />
+    		</xf:instance>
+    		<w2:dataCollection baseNode="map">
+    			<w2:dataList baseNode="list" id="dl_Shoe_Shop" repeatNode="map" saveRemovedData="true" ev:onremoverow="scwin.dl_Shoe_Shop_onremoverow" ev:oninsertrow="scwin.dl_Shoe_Shop_oninsertrow" ev:ondataload="scwin.dl_Shoe_Shop_ondataload" ev:onaftercolumnfilterchange="scwin.dl_Shoe_Shop_onaftercolumnfilterchange">
+    				<w2:columnInfo>
+    					<w2:column id="STATUS" name="Status" dataType="number"></w2:column>
+    					<w2:column id="DATE" name="Date" dataType="date"></w2:column>
+    					<w2:column id="SHOE_ID" name="Shoe ID" dataType="number"></w2:column>
+    					<w2:column id="SHOP_ID" name="Shop ID" dataType="text"></w2:column>
+    					<w2:column id="SHOP_NAME" name="Shop Name" dataType="text"></w2:column>
+    					<w2:column id="SHOE_NAME" name="Shoe Name" dataType="text"></w2:column>
+    					<w2:column id="SIZE" name="Size" dataType="text"></w2:column>
+    					<w2:column id="COUNT" name="Count" dataType="number"></w2:column>
+    					<w2:column id="PRICE" name="Price" dataType="number"></w2:column>
+    					<w2:column id="INVENTORY" name="Inventory" dataType="text"></w2:column>
+    					<w2:column id="TOTAL" name="Total" dataType="number"></w2:column>
+
+    					<w2:column id="NO" name="No" dataType="number" length="" encYN=""></w2:column>
+    				</w2:columnInfo>
+    				<w2:data use="true">
+    					<w2:row>
+    						<STATUS><![CDATA[42]]></STATUS>
+    						<DATE><![CDATA[24]]></DATE>
+    						<SHOE_ID><![CDATA[243]]></SHOE_ID>
+    						<SHOP_ID><![CDATA[243]]></SHOP_ID>
+    						<SHOE_NAME><![CDATA[243]]></SHOE_NAME>
+    					</w2:row>
+    					<w2:row>
+    						<STATUS><![CDATA[24]]></STATUS>
+    						<SHOP_NAME><![CDATA[243]]></SHOP_NAME>
+    					</w2:row>
+    				</w2:data>
+
+    			</w2:dataList>
+    			<w2:dataList baseNode="list" repeatNode="map" id="dl_Size" saveRemovedData="true">
+    				<w2:columnInfo></w2:columnInfo>
+    			</w2:dataList>
+    			<w2:dataList baseNode="list" repeatNode="map" id="dl_Shoe_Shop_Copy" saveRemovedData="true">
+    				<w2:columnInfo>
+    					<w2:column id="STATUS" name="Status" dataType="number"></w2:column>
+    					<w2:column id="DATE" name="Date" dataType="date"></w2:column>
+    					<w2:column id="SHOE_ID" name="Shoe ID" dataType="number"></w2:column>
+    					<w2:column id="SHOP_ID" name="Shop ID" dataType="text"></w2:column>
+    					<w2:column id="SHOP_NAME" name="Shop Name" dataType="text"></w2:column>
+    					<w2:column id="SHOE_NAME" name="Shoe Name" dataType="text"></w2:column>
+    					<w2:column id="SIZE" name="Size" dataType="text"></w2:column>
+    					<w2:column id="COUNT" name="Count" dataType="number"></w2:column>
+    					<w2:column id="PRICE" name="Price" dataType="number"></w2:column>
+    					<w2:column id="INVENTORY" name="Inventory" dataType="text"></w2:column>
+    					<w2:column id="TOTAL" name="Total" dataType="number"></w2:column>
+    					<w2:column id="NO" name="No" dataType="number"></w2:column>
+    				</w2:columnInfo>
+    			</w2:dataList>
+    		</w2:dataCollection>
+    		<w2:workflowCollection></w2:workflowCollection>
+    		<xf:submission id="getDataShop" ref='' target='data:json,dl_Shoe_Shop' action="shop/detail.do" method="get"
+    			mediatype="application/json" encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous"
+    			processMsg="" ev:submit="scwin.getDataShop_submit" ev:submitdone="scwin.getDataShop_submitdone"
+    			ev:submiterror="scwin.getDataShop_submiterror" abortTrigger="">
+    		</xf:submission>
+    		<xf:submission id="postDataShop" ref='data:json,[{"action":"modified","id":"dl_Shoe_Shop"}]' target="" action="shop/detail.do" method="post" mediatype="application/json"
+    			encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit="scwin.postDataShop_submit"
+    			ev:submitdone="scwin.postDataShop_submitdone" ev:submiterror="" abortTrigger="">
+    		</xf:submission>
+    	</xf:model>
+    	<script type="text/javascript" lazy="false"><![CDATA[
+const PRICE = "PRICE"
+const COUNT = "COUNT"
+const TOTAL = "TOTAL"
+const DATE = "DATE"
+const SHOP_ID = "SHOP_ID"
+const SHOP_NAME = "SHOP_NAME"
+const SHOE_NAME = "SHOE_NAME"
+const SIZE = "SIZE"
+const INVENTORY = "INVENTORY"
+const NO = "NO"
+const STATUS = "STATUS"
+	scwin.onpageload = function() {
+		$p.executeSubmission("getDataShop");
+		var currentURL = window.location.href;
+		// split string by '&'
+		var params = currentURL.split('&');
+		//declare init shopID and shopName
+		var shopID = ""
+		var shopName = ""
+		for( let i = 0; i < params.length ; i++){
+			
+			// split string by '='
+			var param= params[i].split('=')
+			// just recieve shopID and shopName
+			if( param[0] == "shopID" ){
+				shopID = param[1]
+			}
+			else if( param[0] == "shopName" ) shopName = decodeURIComponent(param[1])
+		}
+		//if param not apropriate then return
+		if(shopID  == undefined || shopID =="" || shopName  == undefined || shopName =="") return
+		// put into input
+		scwin.getHeaderPage().ipt_ShopID.setValue(shopID)
+		scwin.getHeaderPage().ipt_ShopName.setValue(shopName)
+		scwin.search({
+			SHOP_ID: shopID,
+		})
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+// get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+//
+// chekc valid
+	scwin.checkValidDate= function(dateString) {
+		const date = new Date(dateString);
+	    if (isNaN(date.getTime()))
+	        return false;
+		return true
+	}
+// get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+//	
+	
+	
+	scwin.getDl_Shoe_Shop= function() {
+		return dl_Shoe_Shop
+	}
+	
+	scwin.showText = function() {
+		return "Num: "+ anc_Total.getValue()
+		
+	};
+	
+	scwin.search= function(input){
+		try {
+			if(input.DATE!= undefined && input.DATE!= "" && !scwin.checkValidDate(input.DATE)) throw new Error("Invalid date \nCorrect format: YYYY-MM-DD")
+			if(input.SHOP_NAME == "" ) throw new Error("Shop Name not empty")
+			dl_Shoe_Shop.clearFilter()
+			console.log("input: "+input)
+			if( input.DATE  != undefined && input.DATE != ""  ){
+				var filterOptions = {
+				  type: 'row',       
+				  colIndex: "DATE",    
+				  key: input.DATE,    
+				  condition: 'and',  
+				  exactMatch: false  
+				};
+				dl_Shoe_Shop.setColumnFilter( filterOptions )
+			}
+			//dl_Shoe_Shop.setColumnFilter( {type:'regExp', colIndex:'SHOP_ID', key: input.SHOP_ID, condition:'and'});
+			console.log( "type : " + typeof input.SIZE)
+			//typeof Number(input.SHOP_ID)
+			if( input.SHOP_ID  != undefined && input.SHOP_ID != ""  ){
+				
+				var filterOptions = {
+				  type: 'row',       
+				  colIndex: "SHOP_ID",    
+				  key: input.SHOP_ID,    
+				  condition: 'and',  
+				  
+				};
+				
+				dl_Shoe_Shop.setColumnFilter( filterOptions )
+			}
+			if( input.SIZE  != undefined && input.SIZE != ""  ){
+				var filterOptions = {
+				  type: 'row',       
+				  colIndex: "SIZE",    
+				  key: input.SIZE,    
+				  condition: 'and',  
+				  exactMatch: false  
+				};
+				dl_Shoe_Shop.setColumnFilter( filterOptions )
+			}
+		} catch (e) {
+			alert("ERR: "+ e.message)
+		}
+		scwin.setTotalRowCount()
+	}
+	scwin.addEventHandler= function() {
+		try {
+			const INDEX= 0;
+
+	        var input= scwin.getHeaderPage().scwin.getInput()
+	        if(!scwin.checkValidDate(input.DATE))
+	        	throw new Error("Invalid date \nCorrect format: YYYY-MM-DD")
+	        if(input.SHOP_NAME == undefined || input.SHOP_NAME == "")
+	        	throw new Error("Must enter appropriate SHOP_ID")
+	        if(!scwin.checkValidDate(input.DATE))
+	        	throw new Error("Invalid date \nCorrect format: YYYY-MM-DD")
+			dl_Shoe_Shop.insertRow(INDEX)
+			dl_Shoe_Shop.setCellData(INDEX, DATE, input.DATE)
+			dl_Shoe_Shop.setCellData(INDEX, SHOP_ID, input.SHOP_ID)
+			dl_Shoe_Shop.setCellData(INDEX, SHOP_NAME, input.SHOP_NAME)
+			dl_Shoe_Shop.setCellData(INDEX, STATUS, "insert")
+			scwin.initDataShop()
+		} catch (e) {
+			alert("ERR: "+ e.message)
+		}
+				
+	}
+	scwin.deleteEventHandler= function(){
+		var index= grv_Show_Figure.getFocusedRowIndex()
+		if( index == -1 ){
+			alert( "Choose column need to delete ")
+			return;
+		}
+		dl_Shoe_Shop.deleteRow(index)
+	}
+	scwin.checkValid= function() {
+		var row= dl_Shoe_Shop.getRowCount()
+		var deletee = 0;
+		var insert = 0;
+		var update = 0;
+		for(let i= 0; i < row; i++){
+			// get CELL[PRICE] & CELL[COUNT] value
+			var status= dl_Shoe_Shop.getCellData(i, STATUS)
+			var shoeName= dl_Shoe_Shop.getCellData(i, SHOE_NAME)
+			var size= dl_Shoe_Shop.getCellData(i, SIZE)
+			var count= dl_Shoe_Shop.getCellData(i, COUNT)
+			var inventory= dl_Shoe_Shop.getCellData(i, INVENTORY)
+			// shoeName
+			if(shoeName==undefined || shoeName == "")
+				throw new Error(`ROW[${i+1}] field SHOE_NAME can't be blank`);
+			// size
+			if(size==undefined || size == "")
+				throw new Error(`ROW[${i+1}] field SIZE can't be blank`);
+			if(parseInt(size) < 0)
+				throw new Error(`ROW[${i+1}] field SIZE can't be negative`);
+			// count
+			if(count==undefined || count == "")
+				throw new Error(`ROW[${i+1}] field COUNT can't be blank`);
+			if(parseInt(count) < 0)
+				throw new Error(`ROW[${i+1}] field COUNT can't be negative`);
+			//inventory
+			if(inventory==undefined || inventory == "")
+				throw new Error(`ROW[${i+1}] field INVENTORY can't be blank`);
+			if(parseInt(inventory) < 0)
+				throw new Error(`ROW[${i+1}] field INVENTORY can't be negative`);
+			// set CELL[TOTAL]
+			if( status == "delete" )  
+				deletee+=1
+			else if( status == "insert" )
+				 	insert+=1
+			else if( status == "update" ) 
+			 		update+=1
+		}
+		return {
+			deletee: deletee,
+			insert: insert,
+			update: update
+		}
+	}
+	scwin.saveEventHandler= function(){
+		try{
+			var valid= scwin.checkValid()
+
+			$p.executeSubmission("postDataShop");
+		}catch (e) {
+			alert(e.message);
+		}
+	}
+	scwin.trg_Download_Execel_onclick = function(e) {
+		grv_Show_Figure.advancedExcelDownload({
+			    "useStyle": "false",
+			    "headerFontBold": "true"
+			})
+		/*
+		var filterOptions = {
+		  type: 'row',       // Loại bộ lọc: row cho indexOf
+		  colIndex: "SHOP_ID",       // Chỉ số hoặc ID của cột (ở đây, 1 là chỉ số cột)
+		  key: "0001",      // Chuỗi tìm kiếm
+		  condition: 'and',  // Kết hợp với điều kiện 'and'
+		  exactMatch: false  // Tìm kiếm tương tự (like search)
+		};
+		dl_Shoe_Shop.setColumnFilter( filterOptions )
+		*/
+		//scwin.showText()
+	};
+	
+	
+	scwin.getDataShop_submiterror = function(e) {
+		alert("run fail")
+		console.log(e)
+	};
+	
+	scwin.getDataShop_submitdone = function(e) {	
+		// init
+		scwin.initDataShop()
+		// get data combobox
+		scwin.getHeaderPage().scwin.submitdl_CBX_Size()
+		// get global
+		$p.local.myData = anc_Total.getValue()
+		$p.local.dl_Shoe_Shop = dl_Shoe_Shop.getAllJSON()
+		
+	};
+	scwin.setTotalRowCount= function() {
+		// get total row
+		var row= dl_Shoe_Shop.getRowCount()
+		// set total text	
+		anc_Total.setValue(`TOTAL: ${row}`)
+	}
+	
+	scwin.initDataShop= function(){
+	// get total row
+		var row= dl_Shoe_Shop.getRowCount()
+		// set total text	
+		anc_Total.setValue(`TOTAL: ${row}`)
+	// set CELL[NO] & CELL[TOTAL]
+		for(let i= 0; i < row; i++){
+			// get CELL[PRICE] & CELL[COUNT] value
+			var status= dl_Shoe_Shop.getCellData(i, STATUS)
+			var price= parseInt(dl_Shoe_Shop.getCellData(i, PRICE))
+			var count= parseInt(dl_Shoe_Shop.getCellData(i, COUNT))
+			var inventory= parseInt(dl_Shoe_Shop.getCellData(i, INVENTORY))
+			// set CELL[TOTAL]
+			//dl_Shoe_Shop.setCellData( i , TOTAL , price * count)
+			//dl_Shoe_Shop.setCellData( i , NO , i + 1)
+			//set allow to edit
+			if (status == "insert") {
+			}
+			//set color for status of the INVENTORY
+			 if(inventory>=50) 
+			 	grv_Show_Figure.setCellColor(i, INVENTORY, "red")
+			 else if(inventory<10)
+			 	grv_Show_Figure.setCellColor(i, INVENTORY, "yellow")
+			 else grv_Show_Figure.setCellColor(i, INVENTORY, "green")
+			//grv_Show_Figure.set
+		}
+		
+	}
+	
+	scwin.grv_Show_Figure_onafteredit = function(row,col,value) {
+		try {
+			var size= dl_Shoe_Shop.getCellData(row, SIZE)
+			var price= dl_Shoe_Shop.getCellData(row, PRICE)
+			var inventory= dl_Shoe_Shop.getCellData(row, INVENTORY)
+			if(parseInt(size) > 50){
+				dl_Shoe_Shop.setCellData(row, SIZE, "")
+				throw new Error("SIZE can't large than 50")
+				
+			}	
+			if(parseInt(size) < 0){
+				dl_Shoe_Shop.setCellData(row, SIZE, "")
+				throw new Error("SIZE can't be negative")
+				
+			}
+			if(parseInt(price) < 0){
+				dl_Shoe_Shop.setCellData(row, PRICE, "")
+				throw new Error("SIZE can't be negative")
+				
+			}
+			if(parseInt(inventory) < 0){
+				dl_Shoe_Shop.setCellData(row, INVENTORY, "")
+				throw new Error("INVENTORY can't be negative")
+				
+			}
+		} catch (e) {
+			alert(`Error: ${e.message}`)
+			
+		}
+		
+	};
+	
+	scwin.grv_Show_Figure_oncelldblclick = function(row,col,colId) {
+		if( colId == STATUS )	{
+			var status= dl_Shoe_Shop.getCellData(row, STATUS)
+			//alert("status: "+ status)
+			if (status == "update")
+				dl_Shoe_Shop.setCellData(row, STATUS, "")		
+			else if (status == "")
+				dl_Shoe_Shop.setCellData(row, STATUS, "update")	
+		}	
+	};
+	
+	scwin.postDataShop_submitdone = function(e) {
+		$p.executeSubmission("getDataShop");
+	};
+	
+	scwin.postDataShop_submit = function(e) {
+		$p.executeSubmission("getDataShop");
+		//alert("something wrong happen when save data")
+	};
+	
+
+	scwin.dl_Shoe_Shop_onremoverow = function(info) {
+		scwin.setTotalRowCount()
+	};
+	
+	scwin.dl_Shoe_Shop_oninsertrow = function(info) {
+		scwin.setTotalRowCount()
+	};
+	
+	scwin.dl_Shoe_Shop_ondataload = function() {
+		scwin.setTotalRowCount()
+	};
+	
+	scwin.dl_Shoe_Shop_onaftercolumnfilterchange = function() {
+		scwin.setTotalRowCount()
+	};
+	]]></script>
+    	<style type="text/css"><![CDATA[
+    		.gridBodyDefault_rowNumber{
+    			background-color: #ffcdcd !important;
+    		} 
+    		#mf_wf_Main_wf_Body_grv_Show_Figure td.gridBodyDefault {
+			    border:2px solid black !important;
+			}
+    		.w2grid_rowStatus_U, .w2grid td.gridBodyDefault{
+			    background-color: #ffe3e3 ;
+			}
+	    	.gridHeaderTDDefault {
+	    		background:#ff9999  !important;
+				border:2px solid black !important;
+	    	}
+    		.cell-border{
+    			border:2px solid black !important;
+    		}
+    		.cell-right{
+    			text-align: right !important;
+    		}
+    		.cell-border{
+    			border:2px solid black !important;
+    		}
+    		.cell-header{
+    			background:#ff9999  !important;
+    		}
+    	]]></style>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="width:94%;height: 450px;padding-top: 30px;padding-left: 3%;padding-right: 3%;" id="grp_Body">
+    		<w2:anchor outerDiv="false" style="width: 100px;height: 23px;font-size:22px;position:relative;font-weight: bold;color: #8b8e92;" id="anc_Total">
+    			<xf:label><![CDATA[Total: 1]]></xf:label>
+    		</w2:anchor>
+    		<xf:trigger id="trg_Download_Execel"
+    			style="width:240px;height:38px;border-radius:15px;background:#38b6ff;text-align:center;font-size:22px;float: right;margin-bottom: 10px;"
+    			type="button" ev:onclick="scwin.trg_Download_Execel_onclick">
+    			<xf:label><![CDATA[Download execel]]></xf:label>
+    		</xf:trigger>
+    		<w2:gridView id="grv_Show_Figure" style="width: 100%;height: 85%;border: 2px solid black;text-align:center;"
+    			checkAllType="false" scrollByColumn="false" defaultCellHeight="20" scrollByColumnAdaptive="false" dataList="data:dl_Shoe_Shop"
+    			autoFit="allColumn" autoFitMinWidth="0" class="" rowNumVisible="true" rowStatusVisible="true"
+    			ev:onafteredit="scwin.grv_Show_Figure_onafteredit" ev:oncelldblclick="scwin.grv_Show_Figure_oncelldblclick" rowNumHeaderValue="No" rowStatusHeaderValue="Status">
+    			<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+    			<w2:header style="" id="header1">
+    				<w2:row style="" id="row1">
+    					<w2:column width="100" inputType="text" style="" id="column5" value="Date"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="50" inputType="text" style="" id="column7" value="Shop ID"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="100" inputType="text" style="" id="column9" value="Shop Name"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="" id="column23" value="Shoe Name"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="40" inputType="text" style="" id="column11" value="Size"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="40" inputType="text" style="" id="column13" value="Count"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="100" inputType="text" style="" id="column15" value="Price"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="100" inputType="text" style="" id="column17" value="Total"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    					<w2:column width="100" inputType="text" style="" id="column19" value="Inventory"
+    						displayMode="label" class="cell-border cell-header">
+    					</w2:column>
+    				</w2:row>
+    			</w2:header>
+    			<w2:gBody style="" id="gBody1">
+    				<w2:row style="" id="row2">
+    					<w2:column width="70" inputType="calendar" style="background:#ffe3e3;border-color: ;height:20px;text-align:center;"
+    						id="DATE" value="" displayMode="label" class="cell-border" readOnly="true" calendarValueType="yearMonthDate"
+    						applyFormat="display">
+    					</w2:column>
+    					<w2:column width="50" inputType="text" style="background:#ffe3e3;border-color: ;height:20px;text-align:center;"
+    						id="SHOP_ID" value="" displayMode="label" class=" cell-border" readOnly="true">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffe3e3;border-color: ;height:20px;text-align:center;"
+    						id="SHOP_NAME" value="" displayMode="label" class="cell-border" readOnly="true">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffbd59 !important;border-color: ;height:20px;text-align:center;"
+    						id="SHOE_NAME" value="" displayMode="label" class="cell-border" readOnly="false">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffbd59 !important;border-color: ;height:20px;text-align:center;"
+    						id="SIZE" value="" displayMode="label" displayFormat="#,###" class="cell-border cell-right " dataType="number">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffbd59 !important;border-color: ;height:20px;text-align:center;"
+    						id="COUNT" value="" displayMode="label" displayFormat="#,###,###" class="cell-right cell-border" dataType="number">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffbd59  !important;border-color: ;height:20px;text-align:center;"
+    						id="PRICE" value="" displayMode="label" displayFormat="#,###,###" class="cell-right cell-border" dataType="float">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression" style="background:#ffe3e3;border-color: ;height:20px;text-align:center;"
+    						id="TOTAL" value="" displayMode="label" displayFormat="#,###,###" class="cell-right cell-border" readOnly="true" expression="display('COUNT') * display('PRICE')">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="background:#ffbd59 !important;border-color: ;height:20px;text-align:right;"
+    						id="INVENTORY" value="" displayMode="label" class="cell-right cell-border" dataType="number">
+    					</w2:column>
+    				</w2:row>
+    			</w2:gBody>
+    			<w2:footer style="" id="footer1">
+    				<w2:row style="" id="row5">
+    					<w2:column width="70" inputType="text" style="height:20px;border-left:2px solid black;" id="column54" value=""
+    						displayMode="label">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="height:20px;border-left:2px solid black;" id="column53" value=""
+    						displayMode="label">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="height:20px;border-left:2px solid black;" id="column52" value=""
+    						displayMode="label">
+    					</w2:column>
+    					<w2:column width="70" inputType="text" style="height:20px;border-left:2px solid black;" id="column51" value="SUM"
+    						displayMode="label">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression"
+    						style="color:black;font-weight:none;font-size:12px;height:20px;border-left:2px solid black;" id="column50" value=""
+    						displayMode="label" expression="SUM('SIZE')" class="cell-right " displayFormat="#,###,###">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression"
+    						style="color:black;font-weight:none;font-size:12px;height:20px;border-left:2px solid black;" id="column49" value=""
+    						displayMode="label" expression="SUM('COUNT')" class="cell-right" displayFormat="#,###,###">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression"
+    						style="color:black;font-weight:none;font-size:12px;height:20px;border-left:2px solid black;" id="column48" value=""
+    						displayMode="label" expression="SUM('PRICE')" class="cell-right" displayFormat="#,###,###">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression"
+    						style="color:black;font-weight:none;font-size:12px;height:20px;border-left:2px solid black;" id="column47" value=""
+    						displayMode="label" expression="SUM('TOTAL')" class="cell-right" displayFormat="#,###,###">
+    					</w2:column>
+    					<w2:column width="70" inputType="expression"
+    						style="color:black;font-weight:none;font-size:12px;height:20px;border-left:2px solid black;" id="column46" value=""
+    						displayMode="label" expression="SUM('INVENTORY')" class="cell-right" displayFormat="#,###,###">
+    					</w2:column>
+    				</w2:row>
+    			</w2:footer>
+    		</w2:gridView>
+
+    	</xf:group>
+    </body>
+</html>

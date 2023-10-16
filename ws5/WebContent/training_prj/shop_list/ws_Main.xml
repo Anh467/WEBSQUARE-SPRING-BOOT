@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+	scwin.getHeaderPage= function() {
+		
+		return wf_Header.getWindow()
+	}
+	
+	scwin.getBodyPage= function() {
+		return wf_Body.getWindow()
+	}
+	
+	scwin.getFooterPage= function() {
+		return wf_Footer.getWindow()
+	}
+	
+	scwin.callParent= function() {
+		//alert("callParent")
+	}]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="" id="">
+    		<w2:wframe style="position:static; top:38px; left:106px; width:100% ;" id="wf_Header"
+    			src="/ws5/training_prj/shop_list/ws_Header.xml">
+    		</w2:wframe>
+    		<xf:group style="position:static;display: flex;" id="">
+    			<xf:group style="position:static;width: 70%" id="">
+    				<w2:wframe style="height: 400px;" id="wf_Body" src="/ws5/training_prj/shop_list/ws_Body.xml"></w2:wframe>
+    				<w2:wframe style="position:static;" id="wf_Footer" src="/ws5/training_prj/shop_list/ws_Footer.xml"></w2:wframe>
+    			</xf:group>
+
+    			<xf:group style="position:static;width: 30%;" id=""><xf:image src="/ws5/img/myImage/store.png" style="position:static;top:6%;width:90%;height:85%;margin-top:13%;margin-right:5%;margin-left: 5%;" id=""></xf:image></xf:group>
+    		</xf:group>
+
+
+    	</xf:group>
+
+
+
+
+
+
+
+    	
+    </body>
+</html>

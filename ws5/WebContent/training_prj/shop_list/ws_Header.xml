@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+// get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+// GET input
+	scwin.getInput= function(){
+		var shopName= ipt_Shop_Name.getValue()
+		var input= {
+			SHOP_NAME: shopName
+		}
+		return input
+		
+	}
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	
+	
+	scwin.trg_Search_onclick = function(e) {
+		var input= scwin.getInput()
+		scwin.getBodyPage().scwin.search(input);
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group id="grp_Header"
+    		style="position:static; top:100px; left:206px;width:100%;height:114px;background-color:#ffe3e3;padding-top: 10px;">
+    		<w2:anchor id="" outerDiv="false"
+    			style="width:50%;height:58px;font-size:30px;font-weight:bold;position: relative;margin: 15px 40px 10px 40%;color: black;">
+    			<xf:label><![CDATA[LIST SHOP MANAGER]]></xf:label>
+    		</w2:anchor>
+    		<xf:group id="grp_Contain_Input"
+    			style="width:55%;height:35px;margin-top:15px;float: right;padding-right: 2%;position: static;">
+    			
+    			
+    		<xf:trigger ev:onclick="scwin.trg_Search_onclick" id="trg_Search" style="width:100px;height:38px;border-radius:15px;background:#38b6ff;text-align:center;font-size:22px;float: right;font-weight:bold;" type="button">
+    				<xf:label><![CDATA[Search]]></xf:label>
+    			</xf:trigger><xf:input adjustMaxLength="false" applyFormat="all" dataType="date" id="ipt_Shop_Name" style="width:160px;height:38px;border-radius:15px;background: transparent;border: 3px solid #d580e3;float: right;margin-right: 40px;text-align:center;font-color: black;" placeholder="Shop name...">
+    			</xf:input></xf:group>
+    	</xf:group>
+    </body>
+</html>

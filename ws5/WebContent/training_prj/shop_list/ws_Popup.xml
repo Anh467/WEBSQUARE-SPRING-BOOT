@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_vertical_guides="" meta_horizontal_guides="161 1481">
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+	var shopID= "" 
+	scwin.onpageload = function() {
+		scwin.getBodyPage().scwin.getGrv_Show_Figure().setColumnVisible("STATUS", false)
+	};
+	scwin.getShopID= function() {
+		return shopID
+	}
+	
+	scwin.setGlobalShopID= function(shopID) {
+		$p.local.shopID= shopID
+	}
+	
+	scwin.onpageunload = function() {
+		
+	};
+	scwin.closeParentPopup= function() {
+		$p.parent().scwin.closePopup();
+	}
+	scwin.getHeaderPage= function() {
+		
+		return wf_Header.getWindow()
+	}
+	
+	scwin.getBodyPage= function() {
+		
+		return wf_Body.getWindow()
+	}
+	
+	scwin.getFooterPage= function() {
+		return wf_Footer.getWindow()
+	}
+	scwin.anchor1_onclick = function() {
+		$p.parent().scwin.closePopup();
+		/*var currentURL = window.location.href;
+		var pathWithoutParameters = currentURL.split('?')[0] + '?' + currentURL.split('?')[1];
+		var newURL= pathWithoutParameters +"&" + "shopID"+ "="+ "0012" + "&"+ "shopName" + "=" + "Nguyễn Anh Việt"
+		console.log(newURL);
+		window.location.href = newURL*/
+		//$p.parent().scwin.callParent();
+
+	}
+	scwin.test() = function() {
+		alert("hehe");
+	}]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="position:static;" id="grp_Contain">
+    		<xf:group id="grp_Header" style="position:static;top:100px;left:206px;width:100%;height:60px;background-color:#cb6ce6;padding-top:20px;border: 2px solid black;">
+    			<w2:anchor id="anchor1" outerDiv="false" style="width:50%;height:58px;font-size:35px;font-weight:bold;position: relative;margin: 15px 40px 10px 40%;" ev:onclick="scwin.anchor1_onclick">
+    				<xf:label><![CDATA[Select shop]]></xf:label>
+    			</w2:anchor>
+    		</xf:group><w2:wframe style="position:static;" id="wf_Header" src="/ws5/training_prj/shop_list/ws_Header.xml"></w2:wframe><w2:wframe style="position:static;" id="wf_Body" src="/ws5/training_prj/shop_list/ws_Body.xml"></w2:wframe><w2:wframe style="position:static;" id="wf_Footer" src="/ws5/training_prj/shop_list/ws_Popup_Footer.xml"></w2:wframe>
+    	</xf:group>
+    	
+    	
+
+    	
+    </body>
+</html>

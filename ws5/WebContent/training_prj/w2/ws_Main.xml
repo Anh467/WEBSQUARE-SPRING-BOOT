@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_vertical_guides="" meta_horizontal_guides="148 113">
+    	<w2:type>DEFAULT</w2:type>
+    	<w2:buildDate />
+    	<xf:model>
+    		<xf:instance>
+    			<data xmlns="" />
+    		</xf:instance>
+    		<w2:dataCollection baseNode="map"></w2:dataCollection>
+    		<w2:workflowCollection></w2:workflowCollection>
+    	</xf:model>
+    	<script type="text/javascript" lazy="false"><![CDATA[
+        
+	scwin.onpageload = function() {
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	
+	
+	scwin.trigger1_onclick = function(e) {
+		//alert ("Test call child frame :" + wf_Body.getWindow().anc_Total.getValue())
+		alert ("Test call function child frame :" + wf_Body.getWindow().scwin.showText())
+		
+	};
+	
+	scwin.getHeaderPage= function() {
+		
+		return wf_Header.getWindow()
+	}
+	
+	scwin.getBodyPage= function() {
+		return wf_Body.getWindow()
+	}
+	
+	scwin.getFooterPage= function() {
+		return wf_Footer.getWindow()
+	}
+	
+	scwin.getShopID= function(){
+		alert("hehe")
+	}]]></script>
+    	<style type="text/css"><![CDATA[ ]]></style>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="" id="grp_Main">
+    		<w2:wframe style=";width:100%;" id="wf_Header" class="wf_Header" src="/ws5/training_prj/w2/ws_Header.xml"></w2:wframe>
+    		<w2:wframe style=";width:100%;" id="wf_Body" src="/ws5/training_prj/w2/ws_Body.xml"></w2:wframe>
+    		<w2:wframe style=";width:100%;" id="wf_Footer" src="/ws5/training_prj/w2/ws_Footer.xml"></w2:wframe>
+    	</xf:group>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+// get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+//               
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	
+	
+	scwin.trg_Add_onclick = function(e) {
+		scwin.getBodyPage().scwin.addEventHandler()
+	};
+	
+	scwin.trg_Delete_onclick = function(e) {
+		if(!confirm("Are you sure to delete row?")) return
+		scwin.getBodyPage().scwin.deleteEventHandler()
+	};
+	
+	scwin.trg_Save_onclick = function(e) {
+		if(!confirm("Are you sure to save the change?")) return
+		scwin.getBodyPage().scwin.saveEventHandler()
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group id="grp_Footer" style="width:100%;height:71px;">
+    		<xf:trigger ev:onclick="scwin.trg_Save_onclick" id="trg_Save"
+    			style="border-radius:15px;padding:12px 28px 27px 20px;margin:16px 40px 0px 0px;background:#ff5757;font-weight:bold;width:120px;font-size:15px;float:right;height: 23px;text-align:center;"
+    			type="button">
+    			<xf:label><![CDATA[Save]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.trg_Delete_onclick" id="trg_Delete"
+    			style="border-radius:15px;padding:12px 28px 27px 20px;margin:16px 40px 0px 0px;background:#38b6ff;font-weight:bold;width:120px;font-size:15px;float:right;height: 23px;text-align:center;"
+    			type="button">
+    			<xf:label><![CDATA[Delete]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.trg_Add_onclick" id="trg_Add"
+    			style="border-radius:15px;padding:12px 28px 27px 20px;margin:16px 40px 0px 0px;background:#38b6ff;font-weight:bold;width:120px;font-size:15px;float:right;height: 23px;text-align:center;"
+    			type="button">
+    			<xf:label><![CDATA[Add]]></xf:label>
+    		</xf:trigger>
+    	</xf:group>
+    </body>
+</html>

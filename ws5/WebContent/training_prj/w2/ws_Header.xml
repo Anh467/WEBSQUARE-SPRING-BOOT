@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head meta_vertical_guides="" meta_horizontal_guides="170 33 9">
+    	<w2:type>DEFAULT</w2:type>
+    	<w2:buildDate />
+    	<xf:model>
+    		<xf:instance>
+    			<data xmlns="" />
+    		</xf:instance>
+    		<w2:dataCollection baseNode="map">
+    			<w2:dataList baseNode="list" repeatNode="map" id="dl_CBX_Size" saveRemovedData="true">
+    				<w2:columnInfo>
+    					<w2:column id="SIZE" name="Size" dataType="text"></w2:column>
+    				</w2:columnInfo>
+    				<w2:data use="false">
+    					<w2:row>
+    						<SIZE><![CDATA[30]]></SIZE>
+    					</w2:row>
+    					<w2:row>
+    						<SIZE><![CDATA[40]]></SIZE>
+    					</w2:row>
+    					<w2:row>
+    						<SIZE><![CDATA[50]]></SIZE>
+    					</w2:row>
+    				</w2:data>
+    			</w2:dataList>
+    		</w2:dataCollection>
+    		<w2:workflowCollection></w2:workflowCollection>
+    		<xf:submission id="sbm_Get_Size" ref="" target='data:json,[{"id":"dl_CBX_Size"}]' action="shop/detail/size.do" method="get" mediatype="application/json"
+    			encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+    			ev:submitdone="" ev:submiterror="" abortTrigger="">
+    		</xf:submission>
+    	</xf:model>
+    	<script type="text/javascript" lazy="false"><![CDATA[
+	requires("uiplugin.popup")      
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+
+// get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+		
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+//
+	scwin.getShopNameByShopID= function(ShopID){
+		//var dl_Shop_Array= $p.local.dl_Shoe_Shop
+		var dl_Shop_Array= scwin.getBodyPage().scwin.getDl_Shoe_Shop().getAllJSON()
+		//alert(dl_Shop_Array[0].SHOP_ID + " and " + ShopID)
+		for( let i = 0; i< dl_Shop_Array.length; i++){
+			console.log(dl_Shop_Array[i].SHOP_ID + ": "+dl_Shop_Array[i].SHOP_NAME + ": " + ShopID + ": " )
+			if( dl_Shop_Array[i].SHOP_ID == ShopID )
+				return  dl_Shop_Array[i].SHOP_NAME
+		}
+		return ""
+	};
+// get input
+	scwin.getInput= function() {
+		var date= ipt_Date.getValue()
+		var ShopID= ipt_ShopID.getValue()
+		var size= sbx_Size.getValue()
+		var ShopName= ipt_ShopName.getValue()
+		//if((date == "" || date == undefined ) && (ShopID == "" || ShopID == undefined) && (size == "" || size == undefined)) return true
+		return {
+			DATE: date,
+			SHOP_ID: ShopID,
+			SIZE: size,
+			SHOP_NAME: ShopName
+		}
+	}	
+	
+//
+	scwin.Alerthehe= function() {
+		alert("heheh")
+	};
+// load data 
+	// submission combox 
+	scwin.submitdl_CBX_Size= function() {
+		$p.executeSubmission("sbm_Get_Size")
+	}
+//	
+	scwin.ipt_ShopID_onkeyup = function(e) {
+		var shopID= ipt_ShopID.getValue()
+		//var shopName= scwin.getShopNameByShopID(shopID)
+		//alert(shopName + " and " + shopID)
+		//ipt_ShopName.setValue(shopName)
+		$.ajax({
+            url: `http://localhost:9090/ws5/shop/list/${shopID}.do`,
+            type: "GET",
+            processData: false,
+            contentType: 'application/json',
+            headers: {
+                'Content-Type': undefined,
+            },
+            success: function (data) {
+	           $p.log("data: "+data);
+	           var shopList = data.dl_Shop_List
+	           if(shopList.length != 0)
+	          	 ipt_ShopName.setValue(shopList[0].SHOP_NAME)
+	           else ipt_ShopName.setValue("")
+	         },
+	          error: function (xhr) {
+                console.log("Có lỗi xảy ra: "+xhr);
+                ipt_ShopName.setValue("")
+            }
+	  })
+		
+	};
+	
+	scwin.textbox2_onclick = function(e) {
+		alert("Test call parent: " )
+	};
+	
+	scwin.trg_Search_onclick = function(e) {
+		$p.log(`Check input : ${scwin.getInput().DATE} + ${scwin.getInput().SHOP_ID} + ${scwin.getInput().SIZE} + ${scwin.getInput().SHOP_NAME}`)
+		var input = scwin.getInput()
+		scwin.getBodyPage().scwin.search( input )
+		//scwin.getBodyPage().scwin.getDl_Shoe_Shop().getAllJSON()
+		//alert(scwin.getBodyPage().scwin.showText())
+	};
+	scwin.img_Search_onclick = function(e) {
+		var dataObject = {
+			"type" : "json",
+			"name" : "popupParam",
+			"data" :{
+				hehe: "hehe",
+				SHOP_ID: ipt_ShopID.getValue()
+			}
+		}
+		var options = {
+		    id: "popup1",
+		    type: "wframePopup",
+		    width: "1216px",
+		    height: "720px",
+		    top: "102px",
+		   left: "122px",
+		
+		    popupName: "ShopManager",
+		    modal: true,
+		    resizable: true,
+		    status: true,
+		    menubar: false,
+		    scrollbars: false,
+		    title: false,
+		    dataObject: dataObject,
+		    closeAction : function(){
+			    ipt_ShopID.setValue($p.local.shopID)
+			    ipt_ShopName.setValue($p.local.shopName)
+			  	return true
+			 }
+		};
+		
+		$p.openPopup("/ws5/training_prj/shop_list/ws_Popup.xml", options);
+	};
+	scwin.closePopup= function() {
+		$p.closePopup("popup1");
+	};]]></script>
+    	<style type="text/css"><![CDATA[
+    		.btn-search{
+				width:70px;
+				height:23px;
+				text-align:center;
+				font-size:22px;
+				color:white;
+				background-color:#a87ed1;
+				padding: 5px 20px 10px 20px;
+				border-radius: 15px;
+    		
+    		}
+    		.w2selectbox_col_button{
+    			padding: 0px 5px 0px 0px;
+    			background-color: #ffe3e3 !important;
+    			border-radius: 10px !important;
+    		}
+    		.w2selectbox_over, .w2selectbox_open{
+    			background-color: #ffe3e3 !important;
+    		}
+    		.w2selectbox_col_label{
+    			background-color: #ffe3e3 !important;
+    			border-radius: 20px;
+    		}
+    		.w2table_sb_col{
+    			background-color: #ffe3e3 !important;
+    			border-radius: 20px;
+    		}
+    		.w2table_sb_main{
+    			background-color: transparent !important;
+    		}
+    	 ]]></style>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="position:static; top:100px; left:206px;width:100%;height:114px;background-color:#ffe3e3;padding-top: 10px;"
+    		id="grp_Header">
+    		<w2:anchor outerDiv="false"
+    			style="width:160px;height:58px;font-size:35px;margin:15px 50% 0px 7%;font-weight:bold;position:relative;" id="">
+    			<xf:label><![CDATA[LIST SHOP DETAIL]]></xf:label>
+    		</w2:anchor>
+    		
+    		
+    		<xf:group style="width:75%;height:35px;margin-top:15px;display:flex;justify-content:space-around;float: right;padding-right: 2%;" id="grp_Contain_Input">
+    			<w2:textbox id="textbox2" label="Date"
+    				style="" ev:onclick="scwin.textbox2_onclick" class="btn-search">
+    			</w2:textbox>
+    			<xf:input adjustMaxLength="false" id="ipt_Date"
+    				style="width:115px;height:38px;border-radius:15px;background: transparent;border: 3px solid #d580e3;" applyFormat="all" dataType="date">
+    			</xf:input>
+    			<w2:textbox id="" label="Shop"
+    				style=""
+    				class="header-button btn-search">
+    			</w2:textbox>
+    			<xf:input adjustMaxLength="false" id="ipt_ShopID"
+    				style="width:115px;height:38px;border-radius:15px;background: transparent;border: 3px solid #d580e3;"
+    				pattern="[0-9]+"
+    				maxlength="4" dataType="number" ev:onkeyup="scwin.ipt_ShopID_onkeyup">
+    			</xf:input>
+    			<xf:image src="/ws5/img/search.png" style="width:35px;height:31px;background-color:;" id="img_Search" ev:onclick="scwin.img_Search_onclick"></xf:image>
+    			<xf:input adjustMaxLength="false" id="ipt_ShopName"
+    				style="width:115px;height:38px;border-radius:15px;background: transparent;border: 3px solid #d580e3;" readOnly="true" disabled="true">
+    			</xf:input>
+    			<w2:textbox id="" label="Size"
+    				style="width:70px;height:23px;text-align:center;font-size:22px;color:white;background-color:#a87ed1;padding: 5px 20px 10px 20px;border-radius: 15px;" class="btn-search">
+    			</w2:textbox>
+    			<xf:select1 id="sbx_Size" chooseOption=""
+    				style="width:65px;height:38px;border-radius:15px;background:transparent;border:3px solid #d580e3;" submenuSize="auto" allOption=""
+    				disabled="false" direction="auto" appearance="minimal" disabledClass="w2selectbox_disabled" ref="">
+    				<xf:choices>
+    					<xf:itemset nodeset="data:dl_CBX_Size">
+    						<xf:label ref="SIZE"></xf:label>
+    						<xf:value ref="SIZE"></xf:value>
+    					</xf:itemset>
+    				</xf:choices>
+    			</xf:select1>
+    			<xf:trigger type="button"
+    				style="width:100px;height:38px;border-radius:15px;background:#38b6ff;text-align:center;font-size:22px;" id="trg_Search" ev:onclick="scwin.trg_Search_onclick">
+    				<xf:label><![CDATA[Search]]></xf:label>
+    			</xf:trigger>
+    			
+    		</xf:group>
+    	</xf:group>
+    </body>
+</html>

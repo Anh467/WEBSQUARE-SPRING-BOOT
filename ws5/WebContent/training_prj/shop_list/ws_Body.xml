@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+    	<w2:buildDate />
+    	<xf:model>
+    		<xf:instance>
+    			<data xmlns="" />
+    		</xf:instance>
+    		<w2:dataCollection baseNode="map">
+    			<w2:dataList baseNode="list" repeatNode="map" id="dl_Shop_List" saveRemovedData="true" ev:oninsertrow="scwin.dl_Shop_List_oninsertrow" ev:ondataload="scwin.dl_Shop_List_ondataload" ev:onaftercolumnfilterchange="scwin.dl_Shop_List_onaftercolumnfilterchange" ev:onremoverow="scwin.dl_Shop_List_onremoverow">
+    				<w2:columnInfo>
+    					<w2:column id="SHOP_ID" name="Shop ID" dataType="text"></w2:column>
+    					<w2:column id="SHOP_NAME" name="Shop Name" dataType="text"></w2:column>
+    					<w2:column id="ADDRESS" name="Address" dataType="text"></w2:column>
+    					<w2:column id="NO" name="No" dataType="text"></w2:column>
+    					<w2:column id="STATUS" name="Status" dataType="text"></w2:column>
+    					<w2:column id="SHOP_ID_OLD" name="Shop ID old" dataType="text"></w2:column>
+    				</w2:columnInfo>
+    				<w2:data>
+    					<w2:row>
+    						<SHOP_ID><![CDATA[0001]]></SHOP_ID>
+    						<SHOP_NAME><![CDATA[shop 1]]></SHOP_NAME>
+    						<ADDRESS><![CDATA[address name 1]]></ADDRESS>
+    					</w2:row>
+    					<w2:row>
+    						<SHOP_ID><![CDATA[0002]]></SHOP_ID>
+    						<SHOP_NAME><![CDATA[shop 2]]></SHOP_NAME>
+    						<ADDRESS><![CDATA[address name 2]]></ADDRESS>
+    					</w2:row>
+    					<w2:row></w2:row>
+    					<w2:row></w2:row>
+    				</w2:data>
+    			</w2:dataList>
+    		</w2:dataCollection>
+    		<w2:workflowCollection></w2:workflowCollection>
+    		<xf:submission id="getShopList" ref="" target='data:json,[{"id":"dl_Shop_List"}]' action="shop/list.do" method="get"
+    			mediatype="application/json" encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous"
+    			processMsg="" ev:submit="" ev:submitdone="scwin.getShopList_submitdone" ev:submiterror="scwin.getShopList_submiterror"
+    			abortTrigger="">
+    		</xf:submission>
+    		<xf:submission id="postShopList" ref='data:json,[{"id":"dl_Shop_List"}]' target="" action="shop/list.do" method="post" mediatype="application/json"
+    			encoding="UTF-8" instance="" replace="" errorHandler="" customHandler="" mode="asynchronous" processMsg="" ev:submit=""
+    			ev:submitdone="scwin.postShopList_submitdone" ev:submiterror="scwin.postShopList_submiterror" abortTrigger="">
+    		</xf:submission>
+    	</xf:model>
+    	<script type="text/javascript" lazy="false"><![CDATA[
+const PRICE = "PRICE"
+const COUNT = "COUNT"
+const TOTAL = "TOTAL"
+const DATE = "DATE"
+const SHOP_ID = "SHOP_ID"
+const SHOP_NAME = "SHOP_NAME"
+const SHOE_NAME = "SHOE_NAME"
+const SIZE = "SIZE"
+const INVENTORY = "INVENTORY"
+const NO = "NO"
+const STATUS = "STATUS"      
+const ADDRESS = "ADDRESS"
+	scwin.onpageload = function() {
+		$p.executeSubmission("getShopList")
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	scwin.getGrv_Show_Figure = function() {
+		return grv_Show_Figure
+	}
+	scwin.getDl_Shop_List = function() {
+		return dl_Shop_List
+	}
+	scwin.setTotalRowCount = function() {
+		// get total row
+		var row= dl_Shop_List.getRowCount()
+		// set total text	
+		anc_Total.setValue(`TOTAL: ${row}`)
+	}
+	scwin.initDataShop= function(){
+	// get total row
+		var row= dl_Shop_List.getRowCount()
+	// set total text	
+		anc_Total.setValue(`TOTAL: ${row}`)
+	// set CELL[NO] & CELL[TOTAL]
+		for(let i= 0; i < row; i++){
+			// get CELL[PRICE] & CELL[COUNT] value
+			var status= dl_Shop_List.getCellData(i, STATUS)
+			var shopID= dl_Shop_List.getCellData(i, SHOP_ID)
+			// set CELL[TOTAL]
+			//dl_Shop_List.setCellData( i , NO , i + 1)
+			//dl_Shop_List.setCellAllData(i, "SHOP_ID_OLD", shopID)
+			//set allow to edit
+			/*
+			if (status == "insert") {
+				grv_Show_Figure.setCellBackgroundColor(i, DATE, "#ffbd59")
+				grv_Show_Figure.setReadOnly("cell", i, DATE, false)
+				grv_Show_Figure.setCellBackgroundColor(i, SHOP_NAME, "#ffbd59")
+				grv_Show_Figure.setReadOnly("cell", i, SHOP_NAME, false)
+				grv_Show_Figure.setCellBackgroundColor(i, ADDRESS, "#ffbd59")
+				grv_Show_Figure.setReadOnly("cell", i, ADDRESS, false)
+			}
+			*/
+			//grv_Show_Figure.set
+		}
+		
+	}
+	scwin.checkExist= function(id) {
+		var count = 0
+		var row= dl_Shop_List.getRowCount()
+		for(let i= 0; i < row; i++){
+			var shopID= dl_Shop_List.getCellData(i, SHOP_ID)
+			// set CELL[TOTAL]
+			//dl_Shop_List.setCellData( i , NO , i + 1)
+			//dl_Shop_List.setCellAllData(i, "SHOP_ID_OLD", shopID)
+			if( shopID == id ) ++count;
+			if(count == 2) return true;
+		}
+		return false
+	}
+	scwin.getShopList_submitdone = function(e) {
+		scwin.initDataShop()
+		var shopID= $p.parent().scwin.getShopID()
+		//alert("shopID: " +shopID)
+		if(  shopID  != undefined && shopID != ""  ){
+			var filterOptions = {
+			  type: 'row',       
+			  colIndex: SHOP_ID,    
+			  key: shopID,    
+			  condition: 'and',  
+			  exactMatch: false  
+			};
+			dl_Shop_List.setColumnFilter( filterOptions )
+		}
+	};
+	
+	scwin.getShopList_submiterror = function(e) {
+		alert("Somthing wrong happen")
+	};
+// grid event
+	scwin.grv_Show_Figure_onafteredit = function(row,col,value) {
+		var status= dl_Shop_List.getCellData(row, STATUS)
+		if(status == "insert" ){
+			return
+		}
+		if(status == "delete" ){
+			alert("You can't update DELETE row")
+			return
+		}	
+		dl_Shop_List.setCellData(row, STATUS, "update")
+	};
+	
+	scwin.grv_Show_Figure_oncelldblclick = function(row,col,colId) {
+		if( colId == STATUS )	{
+			var status= dl_Shop_List.getCellData(row, STATUS)
+			//alert("status: "+ status)
+			if (status == "update")
+				dl_Shop_List.setCellData(row, STATUS, "")		
+			else if (status == "")
+				dl_Shop_List.setCellData(row, STATUS, "update")	
+		}	
+	};
+//header action
+scwin.search= function(input){
+	
+	try {
+		dl_Shop_List.clearFilter()
+		if( input.SHOP_NAME  != undefined && input.SHOP_NAME != ""){
+			var filterOptions = {
+			  type: 'row',       
+			  colIndex: "SHOP_NAME",    
+			  key: input.SHOP_NAME,    
+			  condition: 'and',  
+			  exactMatch: false  
+			};
+			dl_Shop_List.setColumnFilter( filterOptions )
+		}
+	} catch (e) {
+		alert("ERR: "+ e.message)
+	}
+	
+	
+	scwin.setTotalRowCount()
+}	
+// footer action 
+	scwin.addEventHandler= function() {
+		const INDEX= 0;
+		dl_Shop_List.insertRow(INDEX)
+		scwin.initDataShop()	
+	}
+	scwin.deleteEventHandler= function(){
+		var index= grv_Show_Figure.getFocusedRowIndex()
+		if( index == -1 ){
+			alert( "Choose column need to delete ")
+			return;
+		}
+		
+		dl_Shop_List.deleteRow(index)
+	}
+	
+//valid
+	scwin.checkValid= function() {
+		var row= dl_Shop_List.getRowCount()
+		var deletee = 0;
+		var insert = 0;
+		var update = 0;
+		for(let i= 0; i < row; i++){
+			// get CELL[PRICE] & CELL[COUNT] value
+			var status= dl_Shop_List.getCellData(i, STATUS)
+			var shopID= dl_Shop_List.getCellData(i, SHOP_ID)
+			var shopName= dl_Shop_List.getCellData(i, SHOP_NAME)
+			var address= dl_Shop_List.getCellData(i, ADDRESS)
+			// shopID
+			if(shopID==undefined || shopID == "")
+				throw new Error(`ROW[${i+1}] field SHOP_ID can't be blank`);
+			if(shopID.length != 4)
+				throw new Error(`ROW[${i+1}] field SHOP_ID must contain 4 number`);
+			// shopName
+			if(shopName==undefined || shopName == "")
+				throw new Error(`ROW[${i+1}] field SHOP_NAME can't be blank`);
+			// address
+			if(address==undefined || address == "")
+				throw new Error(`ROW[${i+1}] field ADDRESS can't be blank`);
+			//exist id
+			
+			// set CELL[TOTAL]
+			if( status == "delete" )  deletee+=1
+			else if( status == "insert" ){
+				if(scwin.checkExist(shopID)) throw new Error(`Shop with id ${shopID} already exist`)
+				  insert+=1
+			}
+			else if( status == "update" ) {
+				if(scwin.checkExist(shopID)) throw new Error(`Shop with id ${shopID} already exist`)
+				  insert+=1
+			 	update+=1
+			}
+		}
+		return {
+			deletee: deletee,
+			insert: insert,
+			update: update
+		}
+	}
+	
+	scwin.saveEventHandler= function(){
+		try{
+			var valid= scwin.checkValid()
+			$p.executeSubmission("postShopList");
+		}catch (e) {
+			alert(e.message);
+		}
+			
+	}
+	scwin.anc_Total_onclick = function() {
+		var input= {
+			SHOP_NAME: "Anh"
+		}
+		scwin.search(input);
+	};
+	
+	scwin.postShopList_submitdone = function(e) {
+		$p.executeSubmission("getShopList");	
+	};
+	
+	scwin.postShopList_submiterror = function(e) {
+		alert("Something wrong happen")
+		$p.executeSubmission("getShopList");	
+	};
+	
+	scwin.dl_Shop_List_oninsertrow = function(info) {
+		scwin.initDataShop()	
+	};
+	
+	scwin.dl_Shop_List_ondataload = function() {
+		scwin.setTotalRowCount()
+	};
+	
+	scwin.dl_Shop_List_onaftercolumnfilterchange = function() {
+		scwin.setTotalRowCount()
+	};
+	
+	scwin.dl_Shop_List_onremoverow = function(info) {
+		scwin.setTotalRowCount()
+	};
+	]]></script>
+    	<style type="text/css"><![CDATA[
+    		#mf_wf_Body_grv_Show_Figure td.gridBodyDefault {
+			    height: 50px;
+			    border:2px solid black !important;
+			}
+    		#mf_wf_Main_wf_Body_grv_Show_Figure td.gridBodyDefault  {
+			    background-color: #ffe3e3;
+			    border:2px solid black ;
+			}
+	    	.gridHeaderTDDefault {
+	    		background:#ff9999  !important;
+				height:50px  !important;
+				border:2px solid black !important;
+	    	}
+    		.grid_body_row{
+    			height: 50px;
+    		}
+    		.cell-border{
+    			border:2px solid black !important;
+    		}
+    		.cell-right{
+    			text-align: right !important;
+    		}
+    		.cell-center{
+    			text-align: center !important;
+    		}
+    		.cell-border{
+    			border:2px solid black !important;
+    		}
+    		.cell-header{
+    			background:#ff9999  !important;
+				height:50px  !important;
+    		}
+    	 ]]></style>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+
+    	<xf:group style="width:94%;height:368px;padding-top:30px;padding-left:3%;padding-right:3%;" id="">
+    		<w2:anchor id="anc_Total" outerDiv="false" style="width: 100px;height: 3%;font-size:22px;position:relative;font-weight: bold;color: #8b8e92"
+    			ev:onclick="scwin.anc_Total_onclick">
+    			<xf:label><![CDATA[Total: 1]]></xf:label>
+    		</w2:anchor>
+    		<w2:gridView autoFit="allColumn" autoFitMinWidth="0" checkAllType="false" class="" dataList="data:dl_Shop_List"
+    			defaultCellHeight="20" ev:onafteredit="scwin.grv_Show_Figure_onafteredit" ev:oncelldblclick="scwin.grv_Show_Figure_oncelldblclick"
+    			id="grv_Show_Figure" rowNumVisible="true" rowStatusVisible="true" scrollByColumnAdaptive="false"
+    			style="width:100%;height:300px;border:2px solid black;text-align:center;" scrollByColumn="false" rowNumHeaderValue="No" rowStatusHeaderValue="Status">
+    			<w2:caption id="caption1" style="" value="this is a grid caption."></w2:caption>
+    			<w2:header id="header1" style="">
+    				<w2:row id="row1" style="">
+    					<w2:column class="cell-border cell-header" displayMode="label" id="column7" inputType="text" style=""
+    						value="Shop ID" width="50">
+    					</w2:column>
+    					<w2:column class="cell-border cell-header" displayMode="label" id="column9" inputType="text" style=""
+    						value="Shop Name" width="80">
+    					</w2:column>
+    					<w2:column class="cell-border cell-header" displayMode="label" id="column19" inputType="text" style=";"
+    						value="Address" width="120">
+    					</w2:column>
+    				</w2:row>
+    			</w2:header>
+    			<w2:gBody id="gBody1" style="">
+    				<w2:row id="row2" style="">
+    					<w2:column class=" cell-border cell-center" displayMode="label" id="SHOP_ID" inputType="text" readOnly="false"
+    						style="background:#ffbd59 !important;border-color: ;height:40px;" value="" width="50" maxLength="4">
+    					</w2:column>
+    					<w2:column class="cell-border cell-center" displayMode="label" id="SHOP_NAME" inputType="text" readOnly="false"
+    						style="background:#ffbd59 !important;border-color: ;height:40px;" value="" width="70">
+    					</w2:column>
+    					<w2:column class="cell-center cell-border" dataType="text" displayMode="label" id="ADDRESS" inputType="text"
+    						style="background:#ffbd59 !important;border-color: ;height:40px;" value="" width="70" readOnly="false">
+    					</w2:column>
+    				</w2:row>
+    			</w2:gBody>
+    		</w2:gridView>
+
+    	</xf:group>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+         <script type="text/javascript" lazy="false"><![CDATA[
+ 	requires("uiplugin.popup")  
+ // get page
+	scwin.getHeaderPage= function() {
+		return $p.parent().scwin.getHeaderPage()
+	}
+	
+	scwin.getBodyPage= function() {
+		return $p.parent().scwin.getBodyPage()
+	}
+	
+	scwin.getFooterPage= function() {
+		return $p.parent().scwin.getFooterPage()
+	}
+// 
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	
+	
+	scwin.trg_Save_onclick = function(e) {
+		var grv_Show_Figure = scwin.getBodyPage().scwin.getGrv_Show_Figure()
+		var dl_Shop_List = scwin.getBodyPage().scwin.getDl_Shop_List()
+		var index= grv_Show_Figure.getFocusedRowIndex()
+		if( index == -1 ){
+			alert( "Choose column need to select ")
+			return;
+		}
+		var shopID= dl_Shop_List.getCellData(index, "SHOP_ID")
+		var shopName= dl_Shop_List.getCellData(index, "SHOP_NAME")
+		alert("index: "+ index + " shopID: "+ shopID + " shopName: " +shopName)
+		$p.local.shopID = shopID
+		$p.local.shopName = shopName
+		/*
+		//redirect
+		var currentURL = window.location.href;
+		var pathWithoutParameters = currentURL.split('&')[0]
+		var newURL= pathWithoutParameters +"&" + "shopID"+ "="+ shopID + "&"+ "shopName" + "=" + shopName
+		console.log(newURL);
+		window.location.href = newURL*/
+		$p.parent().scwin.closeParentPopup()
+		
+	};
+	
+	scwin.trg_Delete_onclick = function(e) {
+		 $p.parent().scwin.closeParentPopup()
+	};
+	]]></script>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group id="grp_Footer" style="width:100%;height:71px;">
+    		<xf:trigger ev:onclick="scwin.trg_Save_onclick" id="trg_Select"
+    			style="border-radius:15px;padding:12px 28px 27px 20px;margin:16px 40px 0px 0px;background:#ff5757;font-weight:bold;width:120px;font-size:15px;float:right;height: 23px;text-align:center;"
+    			type="button">
+    			<xf:label><![CDATA[Select]]></xf:label>
+    		</xf:trigger>
+    		<xf:trigger ev:onclick="scwin.trg_Delete_onclick" id="trg_Cancel"
+    			style="border-radius:15px;padding:12px 28px 27px 20px;margin:16px 40px 0px 0px;background:#38b6ff;font-weight:bold;width:120px;font-size:15px;float:right;height: 23px;text-align:center;"
+    			type="button">
+    			<xf:label><![CDATA[Cancel]]></xf:label>
+    		</xf:trigger>
+    	</xf:group>
+    </body>
+</html>

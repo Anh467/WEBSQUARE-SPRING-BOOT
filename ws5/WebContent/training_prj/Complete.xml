@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+    	<w2:buildDate />
+    	<xf:model>
+    		<xf:instance>
+    			<data xmlns="" />
+    		</xf:instance>
+    		<w2:dataCollection baseNode="map"></w2:dataCollection>
+    		<w2:workflowCollection></w2:workflowCollection>
+    	</xf:model>
+    	<script type="text/javascript" lazy="false"><![CDATA[
+        
+	scwin.onpageload = function() {
+		
+	};
+	
+	scwin.onpageunload = function() {
+		
+	};
+	
+	
+
+	scwin.trg_Shop_Mannager_onmouseout = function(e) {
+		trg_Shop_Mannager.toggleClass("trigger-change-color")
+	};
+	
+	scwin.trg_Shop_Mannager_onmouseover = function(e) {
+		trg_Shop_Mannager.toggleClass("trigger-change-color")
+	};
+	
+	scwin.trg_Shop_Detail_onmouseout = function(e) {
+		trg_Shop_Detail.toggleClass("trigger-change-color")
+	};
+	
+	scwin.trg_Shop_Detail_onmouseover = function(e) {
+		trg_Shop_Detail.toggleClass("trigger-change-color")
+	};
+	
+	scwin.trg_Shop_Mannager_onclick = function(e) {
+		if(confirm("Your changes will not be saved?"))
+			wf_Main.setSrc("shop_list/ws_Main.xml")
+	};
+	
+	scwin.trg_Shop_Detail_onclick = function(e) {
+		if(confirm("Your changes will not be saved?"))
+			wf_Main.setSrc("w2/ws_Main.xml")
+	};
+	
+	
+
+	
+	scwin.image1_onclick = function(e) {
+		
+	};
+	
+	scwin.anchor1_onclick = function() {
+		//alert("callParent");
+		//wf_Main.getWindow().scwin.callParent()
+	};
+	]]></script>
+    	<style type="text/css"><![CDATA[
+    	.purple-back-ground{
+    		background-color:#cb6ce6;
+    	}
+    	.trigger-change-color{
+    		background: #860381 !important;
+    	}
+    	 ]]></style>
+    </head>
+    <body ev:onpageload="scwin.onpageload" ev:onpageunload="scwin.onpageunload">
+    	<xf:group style="position:static;top:100px;left:150px;width:100%;height:789px;" id="">
+    		<xf:group style="position:static;top:113px;left:270px;width:100%;height:100px;font-size:40px;"
+    			id="grp_Bar_Header" class="purple-back-ground">
+    			<xf:image src="/ws5/img/myImage/FPT_Software_logo.svg.png"
+    				style="position:static;top:39px;left:96px;width:15%;height:100px;background:white;" id="image1" ev:onclick="scwin.image1_onclick">
+    			</xf:image>
+    			<w2:anchor outerDiv="false"
+    				style="position:relative;top:20px;left:295px;width:412px;height:23px;font-size:40px;font-weight:bolder;color:black;left: 60px;"
+    				id="anchor1" ev:onclick="scwin.anchor1_onclick">
+    				<xf:label><![CDATA[WEBSQUARE 02 - [VietNA3]]]></xf:label>
+    			</w2:anchor>
+    		</xf:group>
+    		<xf:group style="position:static;top:161px;left:125px;width:15%;height:690px;" id="grp_Bar_Left" class="purple-back-ground">
+    			<xf:group style="position:static;top:245px;left:50px;width:100%;height:42px;" id=""></xf:group><xf:trigger type="button"
+    				style="position:static; top:170px; left:26px; width:100%; height:50px;text-decoration:underline;background-color:#cb6ce6;border: none;color:white;font-size:25px;font-weight:bold;"
+    				id="trg_Shop_Mannager" ev:onmouseout="scwin.trg_Shop_Mannager_onmouseout" ev:onmouseover="scwin.trg_Shop_Mannager_onmouseover" ev:onclick="scwin.trg_Shop_Mannager_onclick">
+    				<xf:label><![CDATA[Shop manager]]></xf:label>
+    			</xf:trigger>
+    			<xf:trigger type="button"
+    				style="position:static; top:162px; left:62px; width:100%; height:50px;text-decoration:underline;background-color:#cb6ce6;border: none;color:white;font-size:25px;font-weight:bolder;"
+    				id="trg_Shop_Detail" ev:onmouseout="scwin.trg_Shop_Detail_onmouseout" ev:onmouseover="scwin.trg_Shop_Detail_onmouseover" ev:onclick="scwin.trg_Shop_Detail_onclick">
+    				<xf:label><![CDATA[Shop detail]]></xf:label>
+    			</xf:trigger>
+    		</xf:group>
+    		<xf:group style="position:absolute;top:100px;left:15%;width:85.02%;height:695px;" id="grp_Bar_Body">
+    			<w2:wframe style="position:relative;height:100.00%;" id="wf_Main" src="/ws5/training_prj/w2/ws_Main.xml" ev:onwframeload="scwin.wf_Main_onwframeload"></w2:wframe>
+    		</xf:group>
+
+    	</xf:group>
+
+
+
+
+
+
+
+
+
+    	
+    </body>
+</html>

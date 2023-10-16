@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.inswave.edu.dao.ShopDao">
+
+	<insert id="insertShop" parameterType="Map">
+		CALL IncreaseQuantity (#{SHOP_ID}, #{SHOE_NAME}, #{DATE}, #{SIZE}, #{COUNT}, #{PRICE}, #{INVENTORY});
+	</insert>
+	<update id="updateShop" parameterType="Map" >
+			UPDATE shopdetail
+				SET SHOE_NAME =  #{SHOE_NAME}, 
+					SIZE =  #{SIZE}, 
+					`COUNT` =  #{COUNT}, 
+					PRICE =  #{PRICE}, 
+					INVENTORY =  #{INVENTORY}
+			WHERE SHOE_ID =  #{SHOE_ID}
+	</update>
+	<delete id="deleteShop" parameterType="Map" >
+		DELETE FROM shopdetail WHERE SHOE_ID IN
+			<foreach item="param" collection="delete" open="(" separator="," close=")">
+				#{param.SHOE_ID}
+			</foreach>
+	</delete>
+	<select id="selectShopDetail" resultType="Map">
+		SELECT a.SHOE_ID, a.SHOP_ID, SHOP_NAME, SHOE_NAME, SIZE, COUNT, PRICE, INVENTORY, DATE
+		FROM shopdetail AS a
+		INNER JOIN shoplist AS b ON a.SHOP_ID = b.SHOP_ID
+	</select>
+	
+	<select id="selectShopDetailSize" resultType="Map">
+		SELECT DISTINCT SIZE
+		FROM shopdetail
+		UNION
+		SELECT ''
+	</select>
+	
+	<insert id="insertShopList" parameterType="Map" >
+		
+			INSERT INTO shoplist (SHOP_ID, SHOP_NAME, ADDRESS)
+			VALUES
+			<foreach item="param" collection="insert" separator=",">
+			    (
+			     #{param.SHOP_ID}, 
+			     #{param.SHOP_NAME}, 
+			     #{param.ADDRESS}
+			    )
+			</foreach>;
+	</insert>
+	<update id="updateShopList" parameterType="Map" >
+			UPDATE shoplist
+				SET SHOP_ID = #{SHOP_ID}, 
+					SHOP_NAME = #{SHOP_NAME}, 
+					ADDRESS = #{ADDRESS}
+			WHERE SHOP_ID= #{SHOP_ID_OLD}
+	</update>
+	<delete id="deleteShopList" parameterType="Map" >
+		DELETE from shoplist WHERE SHOP_ID IN 
+		<foreach item="param" collection="delete" open="(" separator="," close=")">
+				#{param.SHOP_ID}
+		</foreach>
+	</delete>
+	<select id="selectShopList" resultType="Map">
+		select SHOP_ID, SHOP_NAME, ADDRESS, SHOP_ID as SHOP_ID_OLD
+		FROM shoplist
+	</select>
+	<select id="selectShop" parameterType="String" resultType="Map">
+		select SHOP_ID, SHOP_NAME, ADDRESS
+		FROM shoplist
+		WHERE SHOP_ID= #{id}
+	</select>
+</mapper>
